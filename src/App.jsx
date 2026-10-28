@@ -3,7 +3,12 @@ import Casilla from './components/Casilla.jsx'
 
 const FILAS = 6
 const COLUMNAS = 5
-const SOLUCION = 'PERRO'
+const PALABRAS = [
+  'PERRO', 'GATOS', 'PLATO', 'RELOJ', 'MONTE',
+  'LIBRO', 'CAMPO', 'NUBES', 'FRESA', 'PIANO',
+  'TIGRE', 'VERDE', 'PLAYA', 'CARTA', 'MUNDO',
+]
+
 
 function tableroVacio() {
   const tablero = []
@@ -13,9 +18,9 @@ function tableroVacio() {
   return tablero
 }
 
-function estadoDe(letra, columna) {
-  if (SOLUCION[columna] === letra) return 'correcta'
-  if (SOLUCION.includes(letra)) return 'presente'
+function estadoDe(letra, columna, solucion) {
+  if (solucion[columna] === letra) return 'correcta'
+  if (solucion.includes(letra)) return 'presente'
   return 'ausente'
 }
 
@@ -54,10 +59,22 @@ function App() {
     setFilaActual(filaActual + 1)
   }
 
-  function nuevaPartida() {
+ function nuevaPartida() {
   setIntentos(tableroVacio())
   setFilaActual(0)
+  setSolucion(palabraAlAzar(solucion))
 }
+
+function palabraAlAzar(anterior = '') {
+  let palabra
+  do {
+    const i = Math.floor(Math.random() * PALABRAS.length)
+    palabra = PALABRAS[i]
+  } while (palabra === anterior)
+  return palabra
+}
+
+
 
 
   return (
@@ -70,7 +87,7 @@ function App() {
               <Casilla
                 key={c}
                 letra={letra}
-                estado={f < filaActual ? estadoDe(letra, c) : ''}
+                estado={f < filaActual ? estadoDe(letra, c, solucion) : ''}
                 activa={f === filaActual && !terminada}
                 onCambio={(evento) => cambiarLetra(f, c, evento)}
               />
