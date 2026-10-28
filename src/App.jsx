@@ -77,6 +77,30 @@ function palabraAlAzar(anterior = '') {
 }
 
 
+function estadosDeFila(fila, solucion) {
+  const estados = Array(fila.length).fill('ausente')
+
+  const quedan = {}
+
+ 
+  fila.forEach((letra, c) => {
+    if (letra === solucion[c]) {
+      estados[c] = 'correcta'
+    } else {
+      quedan[solucion[c]] = (quedan[solucion[c]] ?? 0) + 1
+    }
+  })
+
+  
+  fila.forEach((letra, c) => {
+    if (estados[c] !== 'correcta' && quedan[letra] > 0) {
+      estados[c] = 'presente'
+      quedan[letra]--
+    }
+  })
+  return estados
+}
+
 
 
   return (
@@ -89,19 +113,23 @@ function palabraAlAzar(anterior = '') {
   </p>
 )}
 
-        {intentos.map((fila, f) => (
-          <div className="fila" key={f}>
-            {fila.map((letra, c) => (
-              <Casilla
-                key={c}
-                letra={letra}
-                estado={f < filaActual ? estadoDe(letra, c, solucion) : ''}
-                activa={f === filaActual && !terminada}
-                onCambio={(evento) => cambiarLetra(f, c, evento)}
-              />
-            ))}
-          </div>
-        ))}
+        {intentos.map((fila, f) => {
+  const estados = f < filaActual ? estadosDeFila(fila, solucion) : []
+  return (
+    <div className="fila" key={f}>
+      {fila.map((letra, c) => (
+        <Casilla
+          key={c}
+          letra={letra}
+          estado={estados[c] ?? ''}
+          activa={f === filaActual && !terminada}
+          onCambio={(evento) => cambiarLetra(f, c, evento)}
+        />
+      ))}
+    </div>
+  )
+})}
+
       </div>
       {terminada ? (
   <>
