@@ -91,3 +91,23 @@ body {
   font-weight: bold;
 }
 
+.casilla.correcta,
+.casilla.presente,
+.casilla.ausente {
+  background-repeat: no-repeat;
+  background-position: right 3px top 3px;
+  background-size: 14px;
+}
+.casilla.correcta {
+  border: 4px double #ffffff;
+  outline: 2px solid #2e7d32;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l3 3 5-6' fill='none' stroke='white' stroke-width='2'/%3E%3C/svg%3E");
+}
+.casilla.presente {
+  border: 3px dashed #1a1a1b;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M1 4h10M8 1l3 3-3 3M11 8H1M4 5L1 8l3 3' fill='none' stroke='black' stroke-width='1.5'/%3E%3C/svg%3E");
+}
+.casilla.ausente {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 2l8 8M10 2l-8 8' fill='none' stroke='white' stroke-width='2'/%3E%3C/svg%3E");
+}
+

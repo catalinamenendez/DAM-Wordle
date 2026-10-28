@@ -119,12 +119,15 @@ function estadosDeFila(fila, solucion) {
     <div className="fila" key={f}>
       {fila.map((letra, c) => (
         <Casilla
-          key={c}
-          letra={letra}
-          estado={estados[c] ?? ''}
-          activa={f === filaActual && !terminada}
-          onCambio={(evento) => cambiarLetra(f, c, evento)}
-        />
+  key={c}
+  letra={letra}
+  estado={estados[c] ?? ''}
+  activa={f === filaActual && !terminada}
+  fila={f}
+  columna={c}
+  onCambio={(evento) => cambiarLetra(f, c, evento)}
+/>
+
       ))}
     </div>
   )
