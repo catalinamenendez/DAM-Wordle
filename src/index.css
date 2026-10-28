@@ -1,0 +1,88 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  background: #ffffff;
+  color: #1a1a1b;
+}
+
+.juego {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 16px;
+  text-align: center;
+}
+
+.fila {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.casilla {
+  width: 58px;
+  height: 58px;
+  padding: 0;
+  border: 2px solid #878a8c;
+  background: #ffffff;
+  color: #1a1a1b;
+  font: inherit;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.casilla.correcta {
+  background: #2e7d32;
+  border-color: #2e7d32;
+  color: #ffffff;
+}
+
+.casilla.presente {
+  background: #f2c94c;
+  border-color: #f2c94c;
+  color: #1a1a1b;
+}
+
+.casilla.ausente {
+  background: #5f6368;
+  border-color: #5f6368;
+  color: #ffffff;
+}
+.tablero{
+  display: grid;
+  gap: 6px;
+  margin: 24px 0;
+}
+
+.casilla:disabled {
+  opacity: 1;
+  -webkit-text-fill-color: currentColor;
+}
+
+.casilla:focus-visible,
+.boton:focus-visible {
+  outline: 3px solid #1a73e8;
+  outline-offset: 2px;
+}
+
+.boton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background: #1a1a1b;
+  color: #ffffff;
+  font: inherit;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.mensaje {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
