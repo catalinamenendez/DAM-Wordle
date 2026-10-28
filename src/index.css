@@ -110,4 +110,45 @@ body {
 .casilla.ausente {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 2l8 8M10 2l-8 8' fill='none' stroke='white' stroke-width='2'/%3E%3C/svg%3E");
 }
+.teclado {
+  display: grid;
+  gap: 6px;
+  margin-top: 24px;
+}
+.fila-teclado {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+.tecla {
+  flex: 1;
+  max-width: 42px;
+  height: 52px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: #d3d6da;
+  color: #1a1a1b;
+  font: inherit;
+  font-weight: bold;
+  cursor: pointer;
+}
+.tecla.ancha {
+  max-width: 64px;
+}
+.tecla.correcta {
+  background: #2e7d32;
+  color: #ffffff;
+}
+.tecla.presente {
+  background: #f2c94c;
+}
+.tecla.ausente {
+  background: #5f6368;
+  color: #ffffff;
+}
+.tecla:focus-visible {
+  outline: 3px solid #1a73e8;
+  outline-offset: 2px;
+}
 

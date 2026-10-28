@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Casilla from './components/Casilla.jsx'
+import Teclado from './components/Teclado.jsx'
 
 const FILAS = 6
 const COLUMNAS = 5
@@ -37,17 +38,32 @@ function App() {
     document.querySelector('.casilla:enabled')?.focus()
   }, [filaActual])
 
-  function cambiarLetra(f, c, evento) {
-    const letra = evento.target.value.toUpperCase()
-  
-    if (!/^[A-ZÑ]?$/.test(letra)) return
+function guardarLetra(f, c, letra) {
+  const copia = intentos.map((fila) => [...fila])
+  copia[f][c] = letra
+  setIntentos(copia)
+  setAviso('')
+}
 
-    const copia = intentos.map((fila) => [...fila])
-    copia[f][c] = letra
-    setIntentos(copia)
+function cambiarLetra(f, c, evento) {
+  const letra = evento.target.value.toUpperCase()
+  if (!/^[A-ZÑ]?$/.test(letra)) return
+  guardarLetra(f, c, letra)
+  if (letra !== '') evento.target.nextElementSibling?.focus()
+}
 
-    if (letra !== '') evento.target.nextElementSibling?.focus()
-  }
+function pulsarTecla(letra) {
+  if (terminada) return
+  const c = intentos[filaActual].indexOf('')
+  if (c !== -1) guardarLetra(filaActual, c, letra)
+}
+
+function borrarLetra() {
+  if (terminada) return
+  const c = intentos[filaActual].findLastIndex((letra) => letra !== '')
+  if (c !== -1) guardarLetra(filaActual, c, '')
+}
+
 
  function comprobar(evento) {
   evento.preventDefault()
@@ -101,6 +117,20 @@ function estadosDeFila(fila, solucion) {
   return estados
 }
 
+function estadosDelTeclado(intentos, filasComprobadas, solucion) {
+  const PRIORIDAD = { ausente: 1, presente: 2, correcta: 3 }
+  const resultado = {}
+  for (let f = 0; f < filasComprobadas; f++) {
+    const estados = estadosDeFila(intentos[f], solucion)
+    intentos[f].forEach((letra, c) => {
+      const anterior = resultado[letra]
+      if (!anterior || PRIORIDAD[estados[c]] > PRIORIDAD[anterior]) {
+        resultado[letra] = estados[c]
+      }
+    })
+  }
+  return resultado
+}
 
 
   return (
@@ -150,6 +180,13 @@ function estadosDeFila(fila, solucion) {
     Comprobar
   </button>
 )}
+
+<Teclado
+  estados={estadosDelTeclado(intentos, filaActual, solucion)}
+  onLetra={pulsarTecla}
+  onBorrar={borrarLetra}
+/>
+
 
     </form>
   )
