@@ -49,20 +49,22 @@ function App() {
     if (letra !== '') evento.target.nextElementSibling?.focus()
   }
 
-  function comprobar(evento) {
-
-    evento.preventDefault()
-    if (terminada) return
-
-    if (intentos[filaActual].includes('')) return
-
-    setFilaActual(filaActual + 1)
+ function comprobar(evento) {
+  evento.preventDefault()
+  if (terminada) return
+  if (intentos[filaActual].includes('')) {
+    setAviso('Faltan letras')
+    return
   }
+  setFilaActual(filaActual + 1)
+}
+
 
  function nuevaPartida() {
   setIntentos(tableroVacio())
   setFilaActual(0)
   setSolucion(palabraAlAzar(solucion))
+  setAviso('')
 }
 
 function palabraAlAzar(anterior = '') {
@@ -81,6 +83,12 @@ function palabraAlAzar(anterior = '') {
     <form className="juego" onSubmit={comprobar}>
       <h1>Wordle</h1>
       <div className="tablero">
+        {aviso && (
+  <p className="aviso" role="alert">
+    {aviso}
+  </p>
+)}
+
         {intentos.map((fila, f) => (
           <div className="fila" key={f}>
             {fila.map((letra, c) => (
